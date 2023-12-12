@@ -1,0 +1,19 @@
+extend type Query {
+    users: [User!]! @paginate
+    user(id: ID @eq): User @find
+}
+
+type Mutation {
+    createUser(
+        name: String!
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @rules(apply: ["min:8"])
+    ): User! @create
+}
+
+type User {
+    id: ID
+    name: String
+    email: String
+    email_verified_at: String
+}
